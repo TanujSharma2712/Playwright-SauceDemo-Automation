@@ -11,30 +11,20 @@ export default defineConfig({
 
   reporter: 'html',
 
-  use: {
+use: {
+  baseURL: 'https://www.saucedemo.com',
 
-    // Base URL
-    baseURL: 'https://www.saucedemo.com',
+  // Run headed locally, headless in GitHub Actions
+  headless: !!process.env.CI,
 
-    // Show browser
-    headless: false,
+  screenshot: 'only-on-failure',
+  video: 'retain-on-failure',
+  trace: 'retain-on-failure',
 
-    // Screenshot after every test
-    screenshot: 'on',
-
-    // Record video for every test
-    video: 'on',
-
-    // Record trace for every test
-    trace: 'on',
-
-    // Slow down execution so you can watch it
-    launchOptions: {
-      slowMo: 700
-    }
-
-  },
-
+  launchOptions: {
+    slowMo: process.env.CI ? 0 : 700
+  }
+},
   projects: [
     {
       name: 'chromium',
